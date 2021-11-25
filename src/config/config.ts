@@ -16,7 +16,17 @@ export const intents: number[] = [
   Intents.FLAGS.DIRECT_MESSAGE_REACTIONS,
 ];
 export const partials: PartialTypes[] = ['MESSAGE', 'CHANNEL', 'REACTION'];
-export const prefix = '-';
+export const prefix = ',';
+export const activities = ['poggers'];
+
+export const author = {
+  name: 'PogBot',
+  url: 'http://github.com/lordronz/pog-bot/',
+};
+
+export const footer = {
+  text: 'PogBot',
+};
 
 export interface Config {
   token: string;
