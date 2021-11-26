@@ -12,12 +12,16 @@ export const intents: number[] = [
   Intents.FLAGS.GUILD_MEMBERS,
   Intents.FLAGS.GUILD_MESSAGES,
   Intents.FLAGS.GUILD_MESSAGE_REACTIONS,
+  Intents.FLAGS.GUILD_PRESENCES,
+  Intents.FLAGS.GUILD_EMOJIS_AND_STICKERS,
+  Intents.FLAGS.GUILD_VOICE_STATES,
   Intents.FLAGS.DIRECT_MESSAGES,
   Intents.FLAGS.DIRECT_MESSAGE_REACTIONS,
+  Intents.FLAGS.DIRECT_MESSAGE_TYPING,
 ];
 export const partials: PartialTypes[] = ['MESSAGE', 'CHANNEL', 'REACTION'];
 export const prefix = ',';
-export const activities = ['poggers'];
+export const activities = ['poggers'].map((s) => `${s} | ${prefix}help`);
 
 export const author = {
   name: 'PogBot',

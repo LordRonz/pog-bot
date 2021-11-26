@@ -1,4 +1,4 @@
+import help from './help';
 import userinfo from './userinfo';
 
-// eslint-disable-next-line import/prefer-default-export
-export { userinfo };
+export { help, userinfo };

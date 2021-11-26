@@ -1,12 +1,18 @@
-import { Message } from 'discord.js';
+import { GuildMember, Message } from 'discord.js';
 import { CustomClient, Command } from '../client';
 import { baseEmbeds, fillTimestamp } from '../utils/embeds';
+
+const getCustomStatus = (member: GuildMember) => {
+  const customStatus = member.presence?.activities.filter((activity) => activity.type === 'CUSTOM');
+
+  return customStatus?.[0];
+};
 
 const userinfo: Command = {
   run: async (_client: CustomClient, message: Message, args: string[]): Promise<void> => {
     const member =
       (await message.mentions.members?.first()?.fetch(true)) ||
-      (await (await message.guild?.members.fetch(args[0]))?.fetch(true));
+      (await (await message.guild?.members.fetch(args?.[0]))?.fetch(true));
 
     if (!member) {
       await message.channel.send('Usage: {Prefix}userinfo @mention');
@@ -15,12 +21,14 @@ const userinfo: Command = {
 
     const user = await member.user.fetch(true);
 
+    const customStatus = getCustomStatus(member);
+
     const embeds = {
       ...baseEmbeds,
       title: `${member.user.username}'s Info'`,
       ...(member.displayAvatarURL({ dynamic: true }) && {
         image: {
-          url: user.displayAvatarURL({ dynamic: true }) || '',
+          url: user.displayAvatarURL({ dynamic: true, size: 2048 }) || '',
         },
       }),
       ...(member.displayAvatarURL({ dynamic: true }) && {
@@ -38,6 +46,32 @@ const userinfo: Command = {
               {
                 name: 'Avatar Hash',
                 value: `\`${user.avatar}\``,
+              },
+            ]
+          : []),
+        ...(member.presence?.clientStatus
+          ? [
+              {
+                name: 'Client Status',
+                value: `\`Desktop: ${member.presence.clientStatus.desktop || 'offline'}\nMobile: ${
+                  member.presence.clientStatus.mobile || 'offline'
+                }\nWeb: ${member.presence.clientStatus.web || 'offline'}\``,
+              },
+            ]
+          : []),
+        ...(member.presence?.status
+          ? [
+              {
+                name: 'Status',
+                value: `\`${member.presence.status}\``,
+              },
+            ]
+          : []),
+        ...(customStatus
+          ? [
+              {
+                name: 'Custom Status',
+                value: `\`${`${customStatus.emoji} ` || ''}${customStatus.state || ''}\``,
               },
             ]
           : []),
@@ -60,6 +94,10 @@ const userinfo: Command = {
         {
           name: 'Created At',
           value: `\`${user.createdAt}\``,
+        },
+        {
+          name: 'Default Avatar URL',
+          value: `\`${user.defaultAvatarURL}\``,
         },
         {
           name: 'Display Name',
@@ -89,6 +127,10 @@ const userinfo: Command = {
               },
             ]
           : []),
+        {
+          name: 'Tag',
+          value: `\`${user.tag}\``,
+        },
         {
           name: 'Username',
           value: `\`${user.username}\``,
