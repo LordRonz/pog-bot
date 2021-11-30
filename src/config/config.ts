@@ -32,6 +32,8 @@ export const footer = {
   text: 'PogBot',
 };
 
+export const admins = new Set(['526630470566281226']);
+
 export interface Config {
   token: string;
   guildId: string;
