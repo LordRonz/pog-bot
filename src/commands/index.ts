@@ -1,4 +1,5 @@
 import help from './help';
-import userinfo from './userinfo';
+import userinfo from './userInfo';
+import listguild from './listGuild';
 
-export { help, userinfo };
+export { help, userinfo, listguild };
