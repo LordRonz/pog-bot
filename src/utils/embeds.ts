@@ -1,5 +1,6 @@
 /* eslint-disable import/prefer-default-export */
 import { MessageEmbedOptions } from 'discord.js';
+
 import { author, footer } from '../config/config';
 
 export const baseEmbeds = {

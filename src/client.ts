@@ -1,4 +1,5 @@
 import { Client, Collection, Message } from 'discord.js';
+
 import * as config from './config/config';
 
 interface CustomClient extends Client {
@@ -17,4 +18,4 @@ interface Command {
   aliases?: string[];
 }
 
-export { CustomClient, Command };
+export { Command, CustomClient };
