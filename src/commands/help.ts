@@ -1,5 +1,6 @@
 import { Message } from 'discord.js';
-import { CustomClient, Command } from '../client';
+
+import { Command, CustomClient } from '../client';
 import { author, footer, prefix } from '../config/config';
 
 const helpEmbed = {

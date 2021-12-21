@@ -1,6 +1,6 @@
-import help from './help';
-import userinfo from './userInfo';
-import listguild from './listGuild';
 import github from './github';
+import help from './help';
+import listguild from './listGuild';
+import userinfo from './userInfo';
 
-export { help, userinfo, listguild, github };
+export { github, help, listguild, userinfo };
