@@ -10,6 +10,11 @@ const getCustomStatus = (member: GuildMember) => {
 
 const userinfo: Command = {
   run: async (_client: CustomClient, message: Message, args: string[]): Promise<void> => {
+    if (args.length === 0) {
+      await message.channel.send('**Usage**: `<prefix>userinfo <User ID | Mention>`');
+      return;
+    }
+
     const member =
       (await message.mentions.members?.first()?.fetch(true)) ||
       (await (await message.guild?.members.fetch(args?.[0]))?.fetch(true));
