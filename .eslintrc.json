@@ -4,8 +4,6 @@
         "node": true
     },
     "extends": [
-        "airbnb-base",
-        "airbnb-typescript/base",
         "eslint:recommended",
         "plugin:prettier/recommended",
         "plugin:@typescript-eslint/eslint-recommended",
@@ -24,7 +22,7 @@
         "simple-import-sort"
     ],
     "rules": {
-      "simple-import-sort/imports": "error",
-      "simple-import-sort/exports": "error"
+        "simple-import-sort/imports": "error",
+        "simple-import-sort/exports": "error"
     }
 }

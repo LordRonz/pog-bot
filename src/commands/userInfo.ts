@@ -1,7 +1,7 @@
 import { GuildMember, Message } from 'discord.js';
 
-import { Command, CustomClient } from '../client';
-import { baseEmbeds, fillTimestamp } from '../utils/embeds';
+import { Command, CustomClient } from '@/client';
+import { baseEmbeds, fillTimestamp } from '@/utils/embeds';
 
 const getCustomStatus = (member: GuildMember) => {
   const customStatus = member.presence?.activities.filter((activity) => activity.type === 'CUSTOM');

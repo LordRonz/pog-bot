@@ -1,10 +1,10 @@
 import express from 'express';
 
-import { CustomClient } from './client';
-import * as commands from './commands';
-import { activities, intents, partials, token } from './config/config';
-import logger from './config/logger';
-import * as events from './events';
+import { CustomClient } from '@/client';
+import * as commands from '@/commands';
+import { activities, intents, partials, token } from '@/config/config';
+import logger from '@/config/logger';
+import * as events from '@/events';
 
 const app = express();
 app.get('/', (req, res) => res.send('Hello World!'));
