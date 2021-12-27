@@ -4,6 +4,8 @@ import * as path from 'path';
 
 config({ path: path.join(__dirname, '../../.env') });
 
+export const expressPort: number = parseInt(process.env.EXPRESS_PORT || 'NaN') || 3000;
+
 export const token: string = process.env.TOKEN || 'abcd';
 export const guildId: string = process.env.GUILDID || 'abcd';
 export const clientId: string = process.env.CLIENTID || 'abcd';
