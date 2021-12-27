@@ -2,13 +2,17 @@ import express from 'express';
 
 import { CustomClient } from '@/client';
 import * as commands from '@/commands';
-import { activities, intents, partials, token } from '@/config/config';
+import { activities, expressPort, intents, partials, token } from '@/config/config';
 import logger from '@/config/logger';
 import * as events from '@/events';
 
 const app = express();
-app.get('/', (req, res) => res.send('Hello World!'));
-app.listen(3000);
+
+app.disable('etag');
+app.disable('x-powered-by');
+
+app.get('/', (_req, res) => res.send('Hello World!'));
+const expressServer = app.listen(expressPort);
 
 const client: CustomClient = new CustomClient({ intents, partials });
 
@@ -33,16 +37,47 @@ client.once('ready', () => {
   }, 1000 * 60 * 15);
 });
 
-client.login(token);
+const exitHandler = () => {
+  if (expressServer) {
+    expressServer.close(() => {
+      logger.info('Server closed');
+      process.exit(1);
+    });
+  } else {
+    process.exit(1);
+  }
+};
+
+client
+  .login(token)
+  .then(() => {
+    logger.info('Logged in!');
+  })
+  .catch((err) => {
+    logger.error(`Failed to login!\n${err}\nTerminating...`);
+    client?.destroy();
+    exitHandler();
+  });
 
 const unexpectedErrorHandler = (error: Error) => {
   logger.error(error);
 };
 
+const gracefulExit = (signal = 'SIGTERM') => {
+  logger.info(`${signal} received`);
+  client?.destroy();
+  exitHandler();
+};
+
 process.on('uncaughtException', unexpectedErrorHandler);
 process.on('unhandledRejection', unexpectedErrorHandler);
 
-process.on('SIGTERM', () => {
-  logger.info('SIGTERM received');
-  client?.destroy();
+// Enable graceful stop
+
+process.once('SIGINT', () => {
+  gracefulExit('SIGINT');
+});
+
+process.once('SIGTERM', () => {
+  gracefulExit('SIGTERM');
 });
