@@ -1,6 +1,6 @@
 import { Client, Collection, Message } from 'discord.js';
 
-import * as config from '@/config/config';
+import * as config from './config/config';
 
 interface CustomClient extends Client {
   commands: Collection<string, Command>;

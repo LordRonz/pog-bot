@@ -1,6 +1,6 @@
 import { MessageEmbedOptions } from 'discord.js';
 
-import { author, footer } from '@/config/config';
+import { author, footer } from '../config/config';
 
 export const baseEmbeds = {
   color: 0x690000,

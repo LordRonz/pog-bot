@@ -1,7 +1,7 @@
 import { Message } from 'discord.js';
 
-import { Command, CustomClient } from '@/client';
-import { author, footer, prefix } from '@/config/config';
+import { Command, CustomClient } from '../client';
+import { author, footer, prefix } from '../config/config';
 
 const helpEmbed = {
   color: 0x690000,
