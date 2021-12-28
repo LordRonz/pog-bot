@@ -1,17 +1,10 @@
-import express from 'express';
+import app from './app';
+import { CustomClient } from './client';
+import * as commands from './commands';
+import { activities, expressPort, intents, partials, token } from './config/config';
+import logger from './config/logger';
+import * as events from './events';
 
-import { CustomClient } from '@/client';
-import * as commands from '@/commands';
-import { activities, expressPort, intents, partials, token } from '@/config/config';
-import logger from '@/config/logger';
-import * as events from '@/events';
-
-const app = express();
-
-app.disable('etag');
-app.disable('x-powered-by');
-
-app.get('/', (_req, res) => res.send('Hello World!'));
 const expressServer = app.listen(expressPort);
 
 const client: CustomClient = new CustomClient({ intents, partials });
@@ -47,6 +40,11 @@ const exitHandler = () => {
     process.exit(1);
   }
 };
+
+if (process.env.NODE_ENV === 'ci') {
+  logger.info('NICE ! CI Successfull, Now exiting...');
+  process.exit(0);
+}
 
 client
   .login(token)

@@ -1,8 +1,8 @@
 import { Message } from 'discord.js';
 
-import { Command, CustomClient } from '@/client';
-import octokit from '@/config/octokit';
-import { baseEmbeds, fillTimestamp } from '@/utils/embeds';
+import { Command, CustomClient } from '../client';
+import octokit from '../config/octokit';
+import { baseEmbeds, fillTimestamp } from '../utils/embeds';
 
 type Info = {
   id?: number | null;
