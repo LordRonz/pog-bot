@@ -36,10 +36,10 @@ export const footer = {
 
 export const admins = new Set(['526630470566281226']);
 
-export interface Config {
+export type Config = {
   token: string;
   guildId: string;
   clientId: string;
   intents: number[];
   prefix: string;
-}
+};

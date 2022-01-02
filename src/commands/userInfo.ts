@@ -1,6 +1,7 @@
 import { GuildMember, Message } from 'discord.js';
 
-import { Command, CustomClient } from '../client';
+import type { Command } from '../client';
+import { CustomClient } from '../client';
 import { baseEmbeds, fillTimestamp } from '../utils/embeds';
 
 const getCustomStatus = (member: GuildMember) => {
