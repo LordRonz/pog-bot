@@ -1,6 +1,7 @@
 import { Message } from 'discord.js';
 
-import { Command, CustomClient } from '../client';
+import type { Command } from '../client';
+import { CustomClient } from '../client';
 import octokit from '../config/octokit';
 import { baseEmbeds, fillTimestamp } from '../utils/embeds';
 
