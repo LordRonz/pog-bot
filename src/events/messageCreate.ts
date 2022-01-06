@@ -1,6 +1,6 @@
-import { Message } from 'discord.js';
+import type { Message } from 'discord.js';
 
-import { CustomClient } from '../client';
+import type { CustomClient } from '../client';
 import logger from '../config/logger';
 
 const messageCreate = (client: CustomClient, msg: Message): void => {
