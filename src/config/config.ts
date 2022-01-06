@@ -1,8 +1,9 @@
-import { Intents, PartialTypes } from 'discord.js';
+import type { PartialTypes } from 'discord.js';
+import { Intents } from 'discord.js';
 import { config } from 'dotenv';
-import * as path from 'path';
+import { join as pathJoin } from 'path';
 
-config({ path: path.join(__dirname, '../../.env') });
+config({ path: pathJoin(__dirname, '../../.env') });
 
 export const expressPort: number = parseInt(process.env.EXPRESS_PORT || 'NaN') || 3000;
 
