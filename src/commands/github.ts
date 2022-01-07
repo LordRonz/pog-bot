@@ -31,12 +31,14 @@ const getUserEmbed = (info: Info) => {
   return {
     ...baseEmbeds,
     title: `${info.name} (GitHub User)`,
-    fields: Object.entries(info).map((field) => {
-      return {
-        name: field[0].replace('_', ' '),
-        value: `${field[1]}`,
-      };
-    }),
+    fields: Object.entries(info)
+      .map((field) => {
+        return {
+          name: field[0].replace('_', ' '),
+          value: `${field[1]}`,
+        };
+      })
+      .filter((field) => field.value),
   };
 };
 
