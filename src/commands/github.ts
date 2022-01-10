@@ -39,10 +39,10 @@ const getUserEmbed = (info: Info) => {
         };
       })
       .filter((field) => field.value),
-  };
+  } as const;
 };
 
-const flags = ['-u', '-r'];
+const flags = ['-u', '-r'] as const;
 
 const github: Command = {
   run: async (client: CustomClient, message: Message, args: string[]): Promise<void> => {

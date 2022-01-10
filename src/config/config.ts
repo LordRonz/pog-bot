@@ -24,18 +24,18 @@ export const intents: number[] = [
 ];
 export const partials: PartialTypes[] = ['MESSAGE', 'CHANNEL', 'REACTION'];
 export const prefix = ',';
-export const activities = ['poggers'].map((s) => `${s} | ${prefix}help`);
+export const activities: readonly string[] = ['poggers'].map((s) => `${s} | ${prefix}help`);
 
 export const author = {
   name: 'PogBot',
   url: 'http://github.com/lordronz/pog-bot/',
-};
+} as const;
 
 export const footer = {
   text: 'PogBot',
-};
+} as const;
 
-export const admins = new Set(['526630470566281226']);
+export const admins: Readonly<Set<string>> = new Set(['526630470566281226']);
 
 export type Config = {
   token: string;
