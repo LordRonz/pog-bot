@@ -29,7 +29,7 @@
     "husky": "^7.0.4",
     "octokit": "^1.7.1",
     "utf-8-validate": "^5.0.8",
-    "winston": "^3.3.4"
+    "winston": "^3.4.0"
   },
   "devDependencies": {
     "@types/eslint": "^8.2.2",
