@@ -8,7 +8,7 @@ const messageCreate = (client: CustomClient, msg: Message): void => {
   if (msg.author.bot) return;
 
   // poggers
-  if (msg.content.toLowerCase() === 'pog') {
+  if (msg.content.toLowerCase().split(' ').includes('pog')) {
     msg.channel.send(msg.content);
   }
 
