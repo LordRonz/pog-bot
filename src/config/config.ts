@@ -5,7 +5,7 @@ import { join as pathJoin } from 'path';
 
 config({ path: pathJoin(__dirname, '../../.env') });
 
-export const expressPort: number = parseInt(process.env.EXPRESS_PORT || 'NaN') || 3000;
+export const expressPort: number = +(process.env.EXPRESS_PORT as string) || 3000;
 
 export const token: string = process.env.TOKEN || 'abcd';
 export const guildId: string = process.env.GUILDID || 'abcd';
