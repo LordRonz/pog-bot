@@ -1,9 +1,8 @@
 import type { Message } from 'discord.js';
 
-import isValidUrl from '@/utils/isValidUrl';
-
 import type { Command } from '../client';
 import type { CustomClient } from '../client';
+import isValidUrl from '../utils/isValidUrl';
 
 const whatAnime: Command = {
   run: async (client: CustomClient, message: Message, args: string[]): Promise<void> => {
