@@ -1,4 +1,4 @@
-import type { Message } from 'discord.js';
+import type { Message, MessageEmbedOptions } from 'discord.js';
 
 import type { Command } from '../client';
 import type { CustomClient } from '../client';
@@ -27,7 +27,7 @@ type Info = {
   created_at?: string | null;
 };
 
-const getUserEmbed = (info: Info) => {
+const getUserEmbed = (info: Info): MessageEmbedOptions => {
   return {
     ...baseEmbeds,
     title: `${info.name} (GitHub User)`,

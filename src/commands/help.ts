@@ -1,10 +1,10 @@
-import type { Message } from 'discord.js';
+import type { Message, MessageEmbedOptions } from 'discord.js';
 
 import type { Command } from '../client';
 import type { CustomClient } from '../client';
 import { author, footer, prefix } from '../config/config';
 
-const helpEmbed = {
+const helpEmbed: MessageEmbedOptions = {
   color: 0x690000,
   title: 'Help',
   author,
