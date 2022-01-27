@@ -1,4 +1,4 @@
-import type { GuildMember, Message } from 'discord.js';
+import type { GuildMember, Message, MessageEmbedOptions } from 'discord.js';
 
 import type { Command } from '../client';
 import type { CustomClient } from '../client';
@@ -30,7 +30,7 @@ const userinfo: Command = {
 
     const customStatus = getCustomStatus(member);
 
-    const embeds = {
+    const embeds: MessageEmbedOptions = {
       ...baseEmbeds,
       title: `${member.user.username}'s Info'`,
       ...(member.displayAvatarURL({ dynamic: true }) && {

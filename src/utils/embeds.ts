@@ -13,7 +13,7 @@ export type BaseEmbeds = {
   };
 };
 
-export const baseEmbeds: BaseEmbeds = {
+export const baseEmbeds: MessageEmbedOptions = {
   color: 0x690000,
   author,
   footer,
@@ -23,6 +23,6 @@ export type EmbedWithTimestamp = MessageEmbedOptions & {
   timestamp?: Date;
 };
 
-export const fillTimestamp = (embed: MessageEmbedOptions): EmbedWithTimestamp => {
+export const fillTimestamp = (embed: MessageEmbedOptions): MessageEmbedOptions => {
   return { ...embed, timestamp: new Date() };
 };
