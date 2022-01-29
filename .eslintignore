@@ -2,3 +2,4 @@ node_modules
 bin
 *.js
 dist
+commitlint.config.ts
