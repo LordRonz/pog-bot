@@ -5,12 +5,13 @@
   "scripts": {
     "dev": "ts-node ./src/index.ts",
     "build": "tsc",
+    "typecheck": "tsc --pretty --noEmit --incremental false",
     "start": "cd dist && node index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "prettier": "prettier --check **/*.ts",
-    "prettier:fix": "prettier --write **/*.ts",
+    "prettier": "prettier --check .",
+    "prettier:fix": "prettier --write .",
     "ci": "yarn build && cross-env NODE_ENV=ci yarn start",
     "prepare": "husky install"
   },

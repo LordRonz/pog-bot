@@ -1,3 +1,3 @@
 # pog-bot
 
-Yes, discord bot, *again*
+Yes, discord bot, _again_
