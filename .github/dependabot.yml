@@ -15,6 +15,9 @@ updates:
       prefix: 'chore(deps): '
     labels:
       - 'dependencies'
+    ignore:
+      - dependency-name: 'chalk'
+        update-types: ['version-update:semver-major']
 
   - package-ecosystem: 'github-actions'
     directory: '/'
