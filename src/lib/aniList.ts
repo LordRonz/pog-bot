@@ -22,13 +22,19 @@ query ($id: Int, $page: Int, $perPage: Int, $search: String) {
 }
 `;
 
-const variables = {
+export type AnilistQueryVars = {
+  search: string;
+  page?: number;
+  perPage?: number;
+};
+
+export const anilistVariablesExample = {
   search: 'Fate/Zero',
   page: 1,
   perPage: 3,
 };
 
-export const getPage = async () => {
+export const getPage = async (variables: AnilistQueryVars) => {
   const res = await axios.post(ANILIST_API_URL, {
     query,
     variables,
