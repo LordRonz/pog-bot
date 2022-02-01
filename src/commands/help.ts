@@ -1,7 +1,6 @@
 import type { Message, MessageEmbedOptions } from 'discord.js';
 
-import type { Command } from '../client';
-import type { CustomClient } from '../client';
+import type { Command, CustomClient } from '../client';
 import { author, footer, prefix } from '../config/config';
 
 const helpEmbed: MessageEmbedOptions = {
