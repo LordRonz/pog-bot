@@ -16,6 +16,8 @@ query ($id: Int, $page: Int, $perPage: Int, $search: String) {
       id
       title {
         romaji
+        english
+        native
       }
     }
   }
@@ -28,6 +30,34 @@ export type AnilistQueryVars = {
   perPage?: number;
 };
 
+export type AnilistQueryResponse = {
+  data: {
+    Page: {
+      pageInfo?: {
+        total?: number;
+        currentPage?: number;
+        lastPage?: number;
+        hasNextPage?: boolean;
+        perPage?: 3;
+      };
+      media?: {
+        id?: number;
+        title?: {
+          romaji?: string;
+          english?: string;
+          native?: string;
+        };
+      }[];
+      genres?: string[];
+      episodes?: number;
+      duration?: number;
+      averageScore?: number;
+      meanScore?: number;
+      favourites?: number;
+    };
+  };
+};
+
 export const anilistVariablesExample = {
   search: 'Fate/Zero',
   page: 1,
@@ -35,6 +65,8 @@ export const anilistVariablesExample = {
 };
 
 export const getPage = async (variables: AnilistQueryVars) => {
+  variables.page = variables.page ?? 1;
+  variables.perPage = variables.perPage ?? 3;
   const res = await axios.post(ANILIST_API_URL, {
     query,
     variables,
