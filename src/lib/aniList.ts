@@ -18,7 +18,34 @@ query ($id: Int, $page: Int, $perPage: Int, $search: String) {
         romaji
         english
         native
+
       }
+      genres
+      episodes
+      duration
+      averageScore
+      favourites
+      recommendations {
+        pageInfo {
+          total
+          perPage
+          currentPage
+          lastPage
+          hasNextPage
+        }
+        nodes {
+          id
+          media {
+            id
+            title {
+              romaji
+              english
+              native
+            }
+          }
+        }
+      }
+      siteUrl
     }
   }
 }
@@ -30,32 +57,52 @@ export type AnilistQueryVars = {
   perPage?: number;
 };
 
-export type AnilistQueryResponse = {
-  data: {
-    Page: {
-      pageInfo?: {
-        total?: number;
-        currentPage?: number;
-        lastPage?: number;
-        hasNextPage?: boolean;
-        perPage?: 3;
+export type AnilistError = {
+  message: string;
+  status: number;
+  locations: {
+    line: number;
+    column: number;
+  }[];
+};
+
+export type AnilistMedia = {
+  genres?: string[];
+  episodes?: number;
+  duration?: number;
+  averageScore?: number;
+  meanScore?: number;
+  favourites?: number;
+  recommmendations?: {
+    pageInfo?: AnilistPageInfo;
+    nodes?: {
+      id?: number;
+      title?: {
+        romaji?: string;
+        english?: string;
+        native?: string;
       };
-      media?: {
-        id?: number;
-        title?: {
-          romaji?: string;
-          english?: string;
-          native?: string;
-        };
-      }[];
-      genres?: string[];
-      episodes?: number;
-      duration?: number;
-      averageScore?: number;
-      meanScore?: number;
-      favourites?: number;
+    }[];
+  };
+  siteUrl?: string;
+};
+
+export type AnilistPageInfo = {
+  total?: number;
+  currentPage?: number;
+  lastPage?: number;
+  hasNextPage?: boolean;
+  perPage?: number;
+};
+
+export type AnilistQueryResponse = {
+  data?: {
+    Page?: {
+      pageInfo?: AnilistPageInfo;
+      media?: AnilistMedia[];
     };
   };
+  errors?: AnilistError[];
 };
 
 export const anilistVariablesExample = {
