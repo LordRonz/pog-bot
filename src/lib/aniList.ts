@@ -18,7 +18,6 @@ query ($id: Int, $page: Int, $perPage: Int, $search: String) {
         romaji
         english
         native
-
       }
       genres
       episodes
