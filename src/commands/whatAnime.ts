@@ -1,10 +1,8 @@
 import axios from 'axios';
 import type { Message, MessageEmbedOptions } from 'discord.js';
 
-import type { Command } from '../client';
-import type { CustomClient } from '../client';
-import { baseEmbeds } from '../utils/embeds';
-import { fillTimestamp } from '../utils/embeds';
+import type { Command, CustomClient } from '../client';
+import { baseEmbeds, fillTimestamp } from '../utils/embeds';
 import isValidUrl from '../utils/isValidUrl';
 
 const API_URL = 'https://api.trace.moe/';
