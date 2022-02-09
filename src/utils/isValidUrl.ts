@@ -1,4 +1,4 @@
-const isValidUrl = (input: string): boolean => {
+export const isValidUrl = (input: string): boolean => {
   let res: URL;
   const url = input.startsWith('http://') || input.startsWith('https://') ? input : 'https://' + input;
   try {

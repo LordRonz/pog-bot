@@ -31,10 +31,21 @@ query ($id: Int, $page: Int, $perPage: Int, $search: String, $rPage: Int, $rPerP
       format
       status
       genres
+      startDate {
+        year
+        month
+        day
+      }
+      endDate {
+        year
+        month
+        day
+      }
       episodes
       duration
       chapters
       volumes
+      source
       description
       averageScore
       meanScore
@@ -83,12 +94,12 @@ export type AnilistError = {
   }[];
 };
 
-enum MediaType {
+export enum MediaType {
   ANIME,
   MANGA,
 }
 
-enum MediaFormat {
+export enum MediaFormat {
   TV,
   TV_SHORT,
   MOVIE,
@@ -101,7 +112,32 @@ enum MediaFormat {
   ONE_SHOT,
 }
 
-enum MediaStatus {
+export enum MediaSeason {
+  WINTER,
+  SPRING,
+  SUMMER,
+  FALL,
+}
+
+export enum MediaSource {
+  ORIGINAL,
+  MANGA,
+  LIGHT_NOVEL,
+  VISUAL_NOVEL,
+  VIDEO_GAME,
+  OTHER,
+  NOVEL,
+  DOUJINSHI,
+  ANIME,
+  WEB_NOVEL,
+  LIVE_ACTION,
+  GAME,
+  COMIC,
+  MULTIMEDIA_PROJECT,
+  PICTURE_BOOK,
+}
+
+export enum MediaStatus {
   FINISHED,
   RELEASING,
   NOT_YET_RELEASED,
@@ -128,10 +164,21 @@ export type AnilistMedia = {
   format?: keyof typeof MediaFormat;
   status?: keyof typeof MediaStatus;
   genres?: string[];
+  startDate?: {
+    year?: number;
+    month?: number;
+    day?: number;
+  };
+  endDate?: {
+    year?: number;
+    month?: number;
+    day?: number;
+  };
   episodes?: number;
   duration?: number;
   chapters?: number;
   volumes?: number;
+  source?: keyof typeof MediaSource;
   description?: string;
   averageScore?: number;
   meanScore?: number;
