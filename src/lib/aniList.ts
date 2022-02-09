@@ -14,6 +14,7 @@ query ($id: Int, $page: Int, $perPage: Int, $search: String, $rPage: Int, $rPerP
     }
     media (id: $id, search: $search) {
       id
+      idMal
       title {
         romaji
         english
@@ -26,10 +27,18 @@ query ($id: Int, $page: Int, $perPage: Int, $search: String, $rPage: Int, $rPerP
         color
       }
       bannerImage
+      type
+      format
+      status
       genres
       episodes
       duration
+      chapters
+      volumes
+      description
       averageScore
+      meanScore
+      popularity
       favourites
       recommendations (page: $rPage, perPage: $rPerPage) {
         pageInfo {
@@ -74,8 +83,35 @@ export type AnilistError = {
   }[];
 };
 
+enum MediaType {
+  ANIME,
+  MANGA,
+}
+
+enum MediaFormat {
+  TV,
+  TV_SHORT,
+  MOVIE,
+  SPECIAL,
+  OVA,
+  ONA,
+  MUSIC,
+  MANGA,
+  NOVEL,
+  ONE_SHOT,
+}
+
+enum MediaStatus {
+  FINISHED,
+  RELEASING,
+  NOT_YET_RELEASED,
+  CANCELLED,
+  HIATUS,
+}
+
 export type AnilistMedia = {
   id?: number;
+  idMal?: number;
   title?: {
     romaji?: string;
     english?: string;
@@ -88,11 +124,18 @@ export type AnilistMedia = {
     color?: string;
   };
   bannerImage?: string;
+  type?: keyof typeof MediaType;
+  format?: keyof typeof MediaFormat;
+  status?: keyof typeof MediaStatus;
   genres?: string[];
   episodes?: number;
   duration?: number;
+  chapters?: number;
+  volumes?: number;
+  description?: string;
   averageScore?: number;
   meanScore?: number;
+  popularity?: number;
   favourites?: number;
   recommmendations?: {
     pageInfo?: AnilistPageInfo;
