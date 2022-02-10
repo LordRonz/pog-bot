@@ -22,7 +22,7 @@ const messageCreate = (client: CustomClient, msg: Message): void => {
 
   if (!command) return;
 
-  logger.info(`Command ${command} executed by ${client.user?.username}`);
+  logger.info(`Command ${command} executed by ${msg.author.username}`);
 
   // Grab the command data from the client.commands Enmap
   const cmd = client.commands.get(command);

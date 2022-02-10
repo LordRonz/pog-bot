@@ -16,6 +16,8 @@ ${removeHtmlTags(decode(media?.description))}
   return description;
 };
 
+const dateOptions: Intl.DateTimeFormatOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+
 const anime: Command = {
   run: async (client: CustomClient, message: Message, args: string[]): Promise<void> => {
     const searchTerm = args.join(' ');
@@ -46,7 +48,11 @@ const anime: Command = {
           ? [
               {
                 name: 'Start Date',
-                value: `${new Date(media.startDate.year, media?.startDate?.month ?? 1, media?.startDate?.day).toString()}`,
+                value: `${new Date(
+                  media.startDate.year,
+                  media?.startDate?.month ?? 1,
+                  media?.startDate?.day
+                ).toLocaleDateString('en-US', dateOptions)}`,
               },
             ]
           : []),
@@ -54,7 +60,10 @@ const anime: Command = {
           ? [
               {
                 name: 'Start Date',
-                value: `${new Date(media.endDate.year, media?.endDate?.month ?? 1, media?.endDate?.day).toString()}`,
+                value: `${new Date(media.endDate.year, media?.endDate?.month ?? 1, media?.endDate?.day).toLocaleDateString(
+                  'en-US',
+                  dateOptions
+                )}`,
               },
             ]
           : []),

@@ -6,10 +6,7 @@ const logger = winston.createLogger({
     winston.format.colorize({
       all: true,
     }),
-    winston.format.timestamp({
-      format: 'DD-MM-YY SS:MM:HH',
-    }),
-    winston.format.printf(({ level, message, timestamp }) => `[${timestamp}] [${level.toUpperCase()}] - ${message}`)
+    winston.format.printf(({ level, message }) => `[${level.toUpperCase()}] - ${message}`)
   ),
 });
 
