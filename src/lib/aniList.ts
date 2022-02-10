@@ -51,7 +51,7 @@ query ($id: Int, $page: Int, $perPage: Int, $search: String, $rPage: Int, $rPerP
       meanScore
       popularity
       favourites
-      recommendations (page: $rPage, perPage: $rPerPage) {
+      recommendations (sort: RATING_DESC , page: $rPage, perPage: $rPerPage) {
         pageInfo {
           total
           perPage
@@ -61,8 +61,10 @@ query ($id: Int, $page: Int, $perPage: Int, $search: String, $rPage: Int, $rPerP
         }
         nodes {
           id
-          media {
+          rating
+          mediaRecommendation {
             id
+            siteUrl
             title {
               romaji
               english
@@ -184,14 +186,19 @@ export type AnilistMedia = {
   meanScore?: number;
   popularity?: number;
   favourites?: number;
-  recommmendations?: {
+  recommendations?: {
     pageInfo?: AnilistPageInfo;
     nodes?: {
       id?: number;
-      title?: {
-        romaji?: string;
-        english?: string;
-        native?: string;
+      rating?: number;
+      mediaRecommendation?: {
+        id?: number;
+        siteUrl?: string;
+        title?: {
+          romaji?: string;
+          english?: string;
+          native?: string;
+        };
       };
     }[];
   };

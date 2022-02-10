@@ -16,6 +16,13 @@ ${removeHtmlTags(decode(media?.description))}
   return description;
 };
 
+const getRecommendations = (media?: AnilistMedia) => {
+  const recommendations = media?.recommendations?.nodes?.map((node) => {
+    return `[${node.mediaRecommendation?.title?.romaji}](${node.mediaRecommendation?.siteUrl}) (${node.rating})`;
+  });
+  return recommendations?.join('\n');
+};
+
 const dateOptions: Intl.DateTimeFormatOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 
 const anime: Command = {
@@ -59,7 +66,7 @@ const anime: Command = {
         ...(media?.endDate?.year
           ? [
               {
-                name: 'Start Date',
+                name: 'End Date',
                 value: `${new Date(media.endDate.year, media?.endDate?.month ?? 1, media?.endDate?.day).toLocaleDateString(
                   'en-US',
                   dateOptions
@@ -79,7 +86,7 @@ const anime: Command = {
           ? [
               {
                 name: 'Duration',
-                value: `${media?.duration}`,
+                value: `${media?.duration} minute${media.duration > 1 ? 's' : ''}`,
               },
             ]
           : []),
@@ -118,6 +125,10 @@ const anime: Command = {
         {
           name: 'Favourites',
           value: `${media?.favourites}`,
+        },
+        {
+          name: 'Recommendations',
+          value: `${getRecommendations(media)}`,
         },
       ],
     };
