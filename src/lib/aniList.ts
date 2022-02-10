@@ -12,7 +12,7 @@ query ($id: Int, $page: Int, $perPage: Int, $search: String, $rPage: Int, $rPerP
       hasNextPage
       perPage
     }
-    media (id: $id, search: $search) {
+    media (sort: POPULARITY_DESC, id: $id, search: $search) {
       id
       idMal
       title {
@@ -94,12 +94,12 @@ export type AnilistError = {
   }[];
 };
 
-export enum MediaType {
+export const enum MediaType {
   ANIME,
   MANGA,
 }
 
-export enum MediaFormat {
+export const enum MediaFormat {
   TV,
   TV_SHORT,
   MOVIE,
@@ -119,7 +119,7 @@ export enum MediaSeason {
   FALL,
 }
 
-export enum MediaSource {
+export const enum MediaSource {
   ORIGINAL,
   MANGA,
   LIGHT_NOVEL,
@@ -137,7 +137,7 @@ export enum MediaSource {
   PICTURE_BOOK,
 }
 
-export enum MediaStatus {
+export const enum MediaStatus {
   FINISHED,
   RELEASING,
   NOT_YET_RELEASED,
