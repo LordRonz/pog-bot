@@ -32,7 +32,7 @@ export const author = {
 } as const;
 
 export const footer = {
-  text: 'PogBot',
+  text: 'Pog Bot',
 } as const;
 
 export const admins: Readonly<Set<string>> = new Set(['526630470566281226']);
