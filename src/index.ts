@@ -7,6 +7,8 @@ import * as events from './events';
 
 const expressServer = app.listen(expressPort);
 
+logger.info('Express server is ready!');
+
 const client: CustomClient = new CustomClient({ intents, partials });
 
 Object.entries(events).forEach((event) => {
@@ -46,6 +48,8 @@ if (process.env.NODE_ENV === 'ci') {
   process.exit(0);
 }
 
+logger.info('Logging in...');
+
 client
   .login(token)
   .then(() => {
@@ -79,3 +83,5 @@ process.once('SIGINT', () => {
 process.once('SIGTERM', () => {
   gracefulExit('SIGTERM');
 });
+
+logger.info('Setup complete!');
