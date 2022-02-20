@@ -41,11 +41,11 @@ const getEmbed = (m: AnilistMedia | AnilistMedia[], page: number): MessageEmbedO
     fields: [
       {
         name: 'English Title',
-        value: `${media?.title?.english}`,
+        value: `${media?.title?.english || 'No english title'}`,
       },
       {
         name: 'Genres',
-        value: `${media?.genres?.join(', ')}`,
+        value: `${media?.genres?.join(', ') || '-'}`,
       },
       ...(media?.startDate?.year
         ? [
@@ -74,7 +74,7 @@ const getEmbed = (m: AnilistMedia | AnilistMedia[], page: number): MessageEmbedO
         ? [
             {
               name: 'Episodes',
-              value: `${media?.episodes}`,
+              value: `${media?.episodes || '-'}`,
             },
           ]
         : []),
@@ -82,7 +82,7 @@ const getEmbed = (m: AnilistMedia | AnilistMedia[], page: number): MessageEmbedO
         ? [
             {
               name: 'Duration',
-              value: `${media?.duration} minute${media.duration > 1 ? 's' : ''}`,
+              value: `${media?.duration} minute${media.duration > 1 ? 's' : '-'}`,
             },
           ]
         : []),
@@ -90,7 +90,7 @@ const getEmbed = (m: AnilistMedia | AnilistMedia[], page: number): MessageEmbedO
         ? [
             {
               name: 'Chapters',
-              value: `${media?.chapters}`,
+              value: `${media?.chapters || '-'}`,
             },
           ]
         : []),
@@ -98,7 +98,7 @@ const getEmbed = (m: AnilistMedia | AnilistMedia[], page: number): MessageEmbedO
         ? [
             {
               name: 'Volumes',
-              value: `${media?.volumes}`,
+              value: `${media?.volumes || '-'}`,
             },
           ]
         : []),
@@ -106,29 +106,45 @@ const getEmbed = (m: AnilistMedia | AnilistMedia[], page: number): MessageEmbedO
         ? [
             {
               name: 'Source',
-              value: `${media?.volumes}`,
+              value: `${media?.source || '-'}`,
+            },
+          ]
+        : []),
+      ...(media?.averageScore
+        ? [
+            {
+              name: 'Average Score',
+              value: `${media?.averageScore || '-'}`,
+            },
+          ]
+        : []),
+      ...(media?.meanScore
+        ? [
+            {
+              name: 'Mean Score',
+              value: `${media?.meanScore || '-'}`,
+            },
+          ]
+        : []),
+      ...(media?.popularity
+        ? [
+            {
+              name: 'Popularity',
+              value: `${media?.popularity || '-'}`,
+            },
+          ]
+        : []),
+      ...(media?.favourites
+        ? [
+            {
+              name: 'Favourites',
+              value: `${media?.favourites || '-'}`,
             },
           ]
         : []),
       {
-        name: 'Average Score',
-        value: `${media?.averageScore}`,
-      },
-      {
-        name: 'Mean Score',
-        value: `${media?.meanScore}`,
-      },
-      {
-        name: 'Popularity',
-        value: `${media?.popularity}`,
-      },
-      {
-        name: 'Favourites',
-        value: `${media?.favourites}`,
-      },
-      {
         name: 'Recommendations',
-        value: `${getRecommendations(media)}`,
+        value: `${getRecommendations(media) || '-'}`,
       },
     ],
   };
@@ -141,7 +157,7 @@ const endRow = new MessageActionRow().addComponents(
   new MessageButton().setCustomId('end').setLabel('End Interaction').setStyle('SECONDARY')
 );
 
-const makeNavRow = (isDisabled: [boolean, boolean, boolean, boolean] = [false, false, false, false]) => {
+const makeNavRow = (isDisabled: boolean[] = [false, false, false, false]) => {
   return new MessageActionRow().addComponents(
     ...[
       ['first', '<<'],
@@ -152,6 +168,10 @@ const makeNavRow = (isDisabled: [boolean, boolean, boolean, boolean] = [false, f
       new MessageButton().setCustomId(id).setLabel(label).setStyle('PRIMARY').setDisabled(isDisabled[i])
     )
   );
+};
+
+const getNav = (page: number, maxPage: number) => {
+  return makeNavRow([...(page === 0 ? [true, true] : [false, false]), ...(page >= maxPage ? [true, true] : [false, false])]);
 };
 
 const anime: Command = {
@@ -179,22 +199,22 @@ const anime: Command = {
         ++page;
         media = allMedia?.[page];
         const embed: MessageEmbedOptions = getEmbed(media as AnilistMedia, page);
-        i.update({ embeds: [fillTimestamp(embed)], components: [makeNavRow(), endRow] });
+        i.update({ embeds: [fillTimestamp(embed)], components: [getNav(page, mediaCount - 1), endRow] });
       } else if (i.customId === 'first') {
         page = 0;
         media = allMedia?.[page];
         const embed: MessageEmbedOptions = getEmbed(media as AnilistMedia, page);
-        i.update({ embeds: [fillTimestamp(embed)], components: [makeNavRow(), endRow] });
+        i.update({ embeds: [fillTimestamp(embed)], components: [getNav(page, mediaCount - 1), endRow] });
       } else if (i.customId === 'prev') {
         --page;
         media = allMedia?.[page];
         const embed: MessageEmbedOptions = getEmbed(media as AnilistMedia, page);
-        i.update({ embeds: [fillTimestamp(embed)], components: [makeNavRow(), endRow] });
+        i.update({ embeds: [fillTimestamp(embed)], components: [getNav(page, mediaCount - 1), endRow] });
       } else if (i.customId === 'last') {
         page = mediaCount - 1;
         media = allMedia?.[page];
         const embed: MessageEmbedOptions = getEmbed(media as AnilistMedia, page);
-        i.update({ embeds: [fillTimestamp(embed)], components: [makeNavRow(), endRow] });
+        i.update({ embeds: [fillTimestamp(embed)], components: [getNav(page, mediaCount - 1), endRow] });
       }
       if (i.customId === 'end') {
         i.deferUpdate();
@@ -205,7 +225,10 @@ const anime: Command = {
 
     const embed: MessageEmbedOptions = getEmbed(media as AnilistMedia, page);
 
-    let msg = await message.channel.send({ embeds: [fillTimestamp(embed)], components: [makeNavRow(), endRow] });
+    let msg = await message.channel.send({
+      embeds: [fillTimestamp(embed)],
+      components: [getNav(page, mediaCount - 1), endRow],
+    });
 
     collector.on('end', async () => {
       msg = await msg.fetch();
