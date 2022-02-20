@@ -231,7 +231,7 @@ export const anilistVariablesExample = {
 
 export const getPage = async (variables: AnilistQueryVars = {}) => {
   variables.page = variables.page ?? 1;
-  variables.perPage = variables.perPage ?? 5;
+  variables.perPage = variables.perPage ?? 10;
   variables.rPage = variables.rPage ?? 1;
   variables.rPerPage = variables.rPerPage ?? 5;
   const res = await axios.post<AnilistQueryResponse>(ANILIST_API_URL, {
