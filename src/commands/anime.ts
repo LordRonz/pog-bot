@@ -24,7 +24,8 @@ const getRecommendations = (media?: AnilistMedia) => {
   return recommendations?.join('\n');
 };
 
-const getEmbed = (media: AnilistMedia): MessageEmbedOptions => {
+const getEmbed = (m: AnilistMedia | AnilistMedia[], page: number): MessageEmbedOptions => {
+  const media = Array.isArray(m) ? m[page] : m;
   const embed: MessageEmbedOptions = {
     ...baseEmbeds,
     title: media?.title?.romaji,
@@ -101,10 +102,14 @@ const getEmbed = (media: AnilistMedia): MessageEmbedOptions => {
             },
           ]
         : []),
-      {
-        name: 'Source',
-        value: `${media?.source}`,
-      },
+      ...(media?.source
+        ? [
+            {
+              name: 'Source',
+              value: `${media?.volumes}`,
+            },
+          ]
+        : []),
       {
         name: 'Average Score',
         value: `${media?.averageScore}`,
@@ -153,21 +158,52 @@ const anime: Command = {
   run: async (client: CustomClient, message: Message, args: string[]): Promise<void> => {
     const searchTerm = args.join(' ');
     const anilist = await getPage({ ...(searchTerm ? { search: searchTerm } : {}) });
-    const media = anilist.data?.Page?.media?.[0];
-    const collector = message.createMessageComponentCollector({
+    const mediaCount = anilist.data?.Page?.media?.length;
+
+    if (!mediaCount || !anilist.data?.Page?.media) {
+      await message.channel.send('Not found! :sob:');
+      return;
+    }
+
+    let page = 0;
+    const allMedia = anilist.data?.Page?.media;
+    let media = anilist.data?.Page?.media?.[page];
+    const collector = message.channel.createMessageComponentCollector({
       componentType: 'BUTTON',
       time: 30000,
       filter: (m) => m.user === message.author,
     });
 
     collector.on('collect', async (i: ButtonInteraction<CacheType>) => {
+      if (i.customId === 'next') {
+        ++page;
+        media = allMedia?.[page];
+        const embed: MessageEmbedOptions = getEmbed(media as AnilistMedia, page);
+        i.update({ embeds: [fillTimestamp(embed)], components: [makeNavRow(), endRow] });
+      } else if (i.customId === 'first') {
+        page = 0;
+        media = allMedia?.[page];
+        const embed: MessageEmbedOptions = getEmbed(media as AnilistMedia, page);
+        i.update({ embeds: [fillTimestamp(embed)], components: [makeNavRow(), endRow] });
+      } else if (i.customId === 'prev') {
+        --page;
+        media = allMedia?.[page];
+        const embed: MessageEmbedOptions = getEmbed(media as AnilistMedia, page);
+        i.update({ embeds: [fillTimestamp(embed)], components: [makeNavRow(), endRow] });
+      } else if (i.customId === 'last') {
+        page = mediaCount - 1;
+        media = allMedia?.[page];
+        const embed: MessageEmbedOptions = getEmbed(media as AnilistMedia, page);
+        i.update({ embeds: [fillTimestamp(embed)], components: [makeNavRow(), endRow] });
+      }
       if (i.customId === 'end') {
-        await i.update({});
+        i.deferUpdate();
         collector.stop('User clicked the end interaction button');
       }
+      collector.resetTimer();
     });
 
-    const embed: MessageEmbedOptions = getEmbed(media as AnilistMedia);
+    const embed: MessageEmbedOptions = getEmbed(media as AnilistMedia, page);
 
     let msg = await message.channel.send({ embeds: [fillTimestamp(embed)], components: [makeNavRow(), endRow] });
 
