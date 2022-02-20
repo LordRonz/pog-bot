@@ -45,12 +45,10 @@ const flags = ['-u', '-r'] as const;
 
 const github: Command = {
   run: async (client: CustomClient, message: Message, args: string[]): Promise<void> => {
-    if (args.length === 0) {
-      return;
-    }
+    const uname: string = args.length ? args[0] : 'LordRonz';
 
     if (!flags.some((flag) => flag === args[0])) {
-      const { data } = await octokit.rest.users.getByUsername({ username: args[0] });
+      const { data } = await octokit.rest.users.getByUsername({ username: uname });
       const info: Info = {
         id: data.id as number | null,
         node_id: data.node_id as string | null,
