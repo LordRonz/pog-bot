@@ -26,7 +26,7 @@ const getRecommendations = (media?: AnilistMedia) => {
 
 const getEmbed = (m: AnilistMedia | AnilistMedia[], page: number): MessageEmbedOptions => {
   const media = Array.isArray(m) ? m[page] : m;
-  const embed: MessageEmbedOptions = {
+  return {
     ...baseEmbeds,
     title: media?.title?.romaji,
     url: media?.siteUrl,
@@ -148,7 +148,6 @@ const getEmbed = (m: AnilistMedia | AnilistMedia[], page: number): MessageEmbedO
       },
     ],
   };
-  return embed;
 };
 
 const dateOptions: Intl.DateTimeFormatOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
