@@ -8,14 +8,11 @@ import { getPage } from '../lib/aniList';
 import { baseEmbeds, fillTimestamp } from '../utils/embeds';
 import removeHtmlTags from '../utils/removeHtmlTags';
 
-const getEmbedDescription = (media?: AnilistMedia) => {
-  const description = `
+const getEmbedDescription = (media?: AnilistMedia) => `
 Type: ${media?.type}, Format: ${media?.format}
 [MyAnimeList](https://myanimelist.net/${media?.type?.toLowerCase()}/${media?.idMal})
 ${removeHtmlTags(decode(media?.description))}
 `;
-  return description;
-};
 
 const getRecommendations = (media?: AnilistMedia) => {
   const recommendations = media?.recommendations?.nodes?.map((node) => {
