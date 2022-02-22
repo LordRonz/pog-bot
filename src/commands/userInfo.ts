@@ -77,7 +77,7 @@ const userinfo: Command = {
           ? [
               {
                 name: 'Custom Status',
-                value: `\`${`${customStatus.emoji} ` || ''}${customStatus.state || ''}\``,
+                value: `\`${[customStatus.emoji, customStatus.state].filter((v) => v).join(' ')}\`` || '`-`',
               },
             ]
           : []),
