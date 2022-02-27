@@ -4,25 +4,23 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### [0.0.2](https://github.com/LordRonz/pog-bot/compare/v0.0.1...v0.0.2) (2022-02-27)
 
-
 ### Features
 
-* add catto command :rocket: ([7e686c2](https://github.com/LordRonz/pog-bot/commit/7e686c2ac46449bdc3f1b96de8e7152711e38816))
-* add clean build script :rocket: ([6778f80](https://github.com/LordRonz/pog-bot/commit/6778f80a441d76634794f1fb6836d1be852f4bcb))
-* add dockerfile and fix codesmell :rocket: ([2e0547b](https://github.com/LordRonz/pog-bot/commit/2e0547bad3a408605b618135234d71a72bfc32f9))
-* add eslint plugin jest :rocket: ([e3cbd75](https://github.com/LordRonz/pog-bot/commit/e3cbd751c7ee38a215143cf83394f1eb8315f621))
-* add rps command :rocket: ([26f5499](https://github.com/LordRonz/pog-bot/commit/26f5499ca3d9dad65dde52f55412a7d9fd6ad49f))
-* add typing to jest config :rocket: ([e306b03](https://github.com/LordRonz/pog-bot/commit/e306b03e350b71bc0e9ba09246df3159b82da4eb))
-* default github username to owner if no args :rocket: ([8d31d79](https://github.com/LordRonz/pog-bot/commit/8d31d79d5c96dbc7ffec16d8d49835b7e465ff7b))
-* initialize a button components :rocket: ([79a2f2f](https://github.com/LordRonz/pog-bot/commit/79a2f2fbaa0a0366625cdd9c2278fe35b8fbc2b6))
-* refactor to use array filter instead of nested template literal :rocket: ([9357bb3](https://github.com/LordRonz/pog-bot/commit/9357bb32e71772b41394aaf775bb93a60334547e))
-* remove catmoji :( :rocket: ([734c80d](https://github.com/LordRonz/pog-bot/commit/734c80dc71630f330fa24bdac252d7c46153647d))
-* working anime button :rocket: ([9dc2bee](https://github.com/LordRonz/pog-bot/commit/9dc2bee93c756aa6d396ea732fd33b6dfad4676e))
-
+- add catto command :rocket: ([7e686c2](https://github.com/LordRonz/pog-bot/commit/7e686c2ac46449bdc3f1b96de8e7152711e38816))
+- add clean build script :rocket: ([6778f80](https://github.com/LordRonz/pog-bot/commit/6778f80a441d76634794f1fb6836d1be852f4bcb))
+- add dockerfile and fix codesmell :rocket: ([2e0547b](https://github.com/LordRonz/pog-bot/commit/2e0547bad3a408605b618135234d71a72bfc32f9))
+- add eslint plugin jest :rocket: ([e3cbd75](https://github.com/LordRonz/pog-bot/commit/e3cbd751c7ee38a215143cf83394f1eb8315f621))
+- add rps command :rocket: ([26f5499](https://github.com/LordRonz/pog-bot/commit/26f5499ca3d9dad65dde52f55412a7d9fd6ad49f))
+- add typing to jest config :rocket: ([e306b03](https://github.com/LordRonz/pog-bot/commit/e306b03e350b71bc0e9ba09246df3159b82da4eb))
+- default github username to owner if no args :rocket: ([8d31d79](https://github.com/LordRonz/pog-bot/commit/8d31d79d5c96dbc7ffec16d8d49835b7e465ff7b))
+- initialize a button components :rocket: ([79a2f2f](https://github.com/LordRonz/pog-bot/commit/79a2f2fbaa0a0366625cdd9c2278fe35b8fbc2b6))
+- refactor to use array filter instead of nested template literal :rocket: ([9357bb3](https://github.com/LordRonz/pog-bot/commit/9357bb32e71772b41394aaf775bb93a60334547e))
+- remove catmoji :( :rocket: ([734c80d](https://github.com/LordRonz/pog-bot/commit/734c80dc71630f330fa24bdac252d7c46153647d))
+- working anime button :rocket: ([9dc2bee](https://github.com/LordRonz/pog-bot/commit/9dc2bee93c756aa6d396ea732fd33b6dfad4676e))
 
 ### Bug Fixes
 
-* embed field value empty error :rocket: ([8607020](https://github.com/LordRonz/pog-bot/commit/86070207a8b1853364718376501e6239720dc26b))
+- embed field value empty error :rocket: ([8607020](https://github.com/LordRonz/pog-bot/commit/86070207a8b1853364718376501e6239720dc26b))
 
 ### 0.0.1 (2022-02-13)
 
