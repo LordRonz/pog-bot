@@ -2,7 +2,7 @@ import type { Message, MessageEmbedOptions } from 'discord.js';
 
 import type { Command, CustomClient } from '../client';
 import type { CatApiObject, CatFactObject } from '../lib/catto';
-import { getCatApi, getCatFact, getCatmojis } from '../lib/catto';
+import { getCatApi, getCatFact } from '../lib/catto';
 import { baseEmbeds, fillTimestamp } from '../utils/embeds';
 
 const getEmbed = (cats: CatApiObject[], thumbnails: CatApiObject[], facts: CatFactObject[]): MessageEmbedOptions =>
@@ -16,7 +16,7 @@ const getEmbed = (cats: CatApiObject[], thumbnails: CatApiObject[], facts: CatFa
       url: thumbnails[0].url,
     },
     color: 0x631313,
-    description: `${getCatmojis()}\nRandom cat facts:\n${facts[0].text}`,
+    description: `Random cat facts:\n${facts[0].text}`,
   });
 
 const catto: Command = {
