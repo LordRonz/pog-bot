@@ -49,9 +49,13 @@ const getRpsWinnerEmbed = (winner: Participant, loser: Participant, draw = false
       };
 };
 
+const ROCK = 'rock';
+const PAPER = 'paper';
+const SCISSOR = 'scissor';
+
 type Participant = {
   user: User;
-  shape: 'rock' | 'paper' | 'scissor';
+  shape: typeof ROCK | typeof PAPER | typeof SCISSOR;
 };
 
 const rps: Command = {
@@ -72,33 +76,36 @@ const rps: Command = {
             components: [rpsComponent],
           });
         }
-      } else if (i.customId === 'rock') {
-        participants.push({ user: i.user, shape: 'rock' });
+      } else if (i.customId === ROCK) {
+        participants.push({ user: i.user, shape: ROCK });
         if (participants.length < 2) i.reply(`${i.user.username} has chosen`);
-      } else if (i.customId === 'paper') {
-        participants.push({ user: i.user, shape: 'paper' });
+      } else if (i.customId === PAPER) {
+        participants.push({ user: i.user, shape: PAPER });
         if (participants.length < 2) i.reply(`${i.user.username} has chosen`);
-      } else if (i.customId === 'scissor') {
-        participants.push({ user: i.user, shape: 'scissor' });
+      } else if (i.customId === SCISSOR) {
+        participants.push({ user: i.user, shape: SCISSOR });
         if (participants.length < 2) i.reply(`${i.user.username} has chosen`);
       }
       if (participants.length >= 2) {
         try {
           const [p1, p2] = participants;
+          let winner: Participant = p1,
+            loser: Participant = p2;
+
           if (p1.shape === p2.shape) {
             await i.reply({ embeds: [{ ...getRpsWinnerEmbed(p1, p2, true), timestamp: new Date() }] });
-          } else if (p1.shape === 'rock' && p2.shape === 'paper') {
-            await i.reply({ embeds: [{ ...getRpsWinnerEmbed(p2, p1), timestamp: new Date() }] });
-          } else if (p1.shape === 'rock' && p2.shape === 'scissor') {
-            await i.reply({ embeds: [{ ...getRpsWinnerEmbed(p1, p2), timestamp: new Date() }] });
-          } else if (p1.shape === 'paper' && p2.shape === 'scissor') {
-            await i.reply({ embeds: [{ ...getRpsWinnerEmbed(p2, p1), timestamp: new Date() }] });
-          } else if (p2.shape === 'rock' && p1.shape === 'paper') {
-            await i.reply({ embeds: [{ ...getRpsWinnerEmbed(p1, p2), timestamp: new Date() }] });
-          } else if (p2.shape === 'rock' && p1.shape === 'scissor') {
-            await i.reply({ embeds: [{ ...getRpsWinnerEmbed(p2, p1), timestamp: new Date() }] });
-          } else if (p2.shape === 'paper' && p1.shape === 'scissor') {
-            await i.reply({ embeds: [{ ...getRpsWinnerEmbed(p1, p2), timestamp: new Date() }] });
+          } else {
+            if (p1.shape === ROCK) {
+              winner = p2.shape === PAPER ? p2 : p1;
+              loser = p2.shape === PAPER ? p1 : p2;
+            } else if (p1.shape === PAPER) {
+              winner = p2.shape === SCISSOR ? p2 : p1;
+              loser = p2.shape === SCISSOR ? p1 : p2;
+            } else if (p1.shape === SCISSOR) {
+              winner = p2.shape === ROCK ? p2 : p1;
+              loser = p2.shape === ROCK ? p1 : p2;
+            }
+            await i.reply({ embeds: [{ ...getRpsWinnerEmbed(winner, loser), timestamp: new Date() }] });
           }
           collector.stop('Rock paper scissor game is done');
         } catch (e) {
