@@ -3,6 +3,7 @@ import { ButtonInteraction, Message, MessageActionRow, MessageButton } from 'dis
 
 import type { Command, CustomClient } from '../client';
 import { author, footer } from '../config/config';
+import logger from '../config/logger';
 
 const rpsEmbed: MessageEmbedOptions = {
   color: 0x690000,
@@ -30,20 +31,20 @@ const rpsComponent = new MessageActionRow().addComponents(
   new MessageButton().setCustomId('scissor').setLabel('Scissor').setStyle('PRIMARY')
 );
 
-const getRpsWinnerEmbed = (name: string, draw = false): MessageEmbedOptions => {
-  return !draw
+const getRpsWinnerEmbed = (winner: Participant, loser: Participant, draw = false): MessageEmbedOptions => {
+  return !draw && winner && loser
     ? {
         color: 0x690000,
         title: 'Rock Paper Scissor',
         author,
-        description: `The winner is ${name}`,
+        description: `The winner is **${winner.user.username}**\n**${winner.user.username}**: ${winner.shape}\n**${loser.user.username}**: ${loser.shape}`,
         footer,
       }
     : {
         color: 0x690000,
         title: 'Rock Paper Scissor',
         author,
-        description: "It's a DRAW",
+        description: `It's a DRAW\n**${winner.user.username}**: ${winner.shape}\n**${loser.user.username}**: ${loser.shape}`,
         footer,
       };
 };
@@ -64,31 +65,49 @@ const rps: Command = {
 
     collector.on('collect', async (i: ButtonInteraction<CacheType>) => {
       if (i.customId === 'lesgo') {
-        i.reply({ ephemeral: true, embeds: [{ ...rpsEmbedStage2, timestamp: new Date() }], components: [rpsComponent] });
+        if (participants.length < 2) {
+          i.reply({
+            ephemeral: true,
+            embeds: [{ ...rpsEmbedStage2, timestamp: new Date() }],
+            components: [rpsComponent],
+          });
+        }
       } else if (i.customId === 'rock') {
         participants.push({ user: i.user, shape: 'rock' });
-        if (participants.length < 2) i.deferUpdate();
+        if (participants.length < 2) i.reply(`${i.user.username} has chosen`);
       } else if (i.customId === 'paper') {
         participants.push({ user: i.user, shape: 'paper' });
-        if (participants.length < 2) i.deferUpdate();
+        if (participants.length < 2) i.reply(`${i.user.username} has chosen`);
       } else if (i.customId === 'scissor') {
         participants.push({ user: i.user, shape: 'scissor' });
-        if (participants.length < 2) i.deferUpdate();
+        if (participants.length < 2) i.reply(`${i.user.username} has chosen`);
       }
       if (participants.length >= 2) {
-        const [p1, p2] = participants;
-        if (p1.shape === p2.shape) {
-          i.reply({ embeds: [{ ...getRpsWinnerEmbed('bruh', true), timestamp: new Date() }] });
-        } else if (p1.shape === 'rock' && p2.shape === 'paper') {
-          i.reply({ embeds: [{ ...getRpsWinnerEmbed(p2.user.username), timestamp: new Date() }] });
-        } else if (p1.shape === 'rock' && p2.shape === 'scissor') {
-          i.reply({ embeds: [{ ...getRpsWinnerEmbed(p1.user.username), timestamp: new Date() }] });
-        } else if (p1.shape === 'paper' && p2.shape === 'scissor') {
-          i.reply({ embeds: [{ ...getRpsWinnerEmbed(p2.user.username), timestamp: new Date() }] });
+        try {
+          const [p1, p2] = participants;
+          if (p1.shape === p2.shape) {
+            await i.reply({ embeds: [{ ...getRpsWinnerEmbed(p1, p2, true), timestamp: new Date() }] });
+          } else if (p1.shape === 'rock' && p2.shape === 'paper') {
+            await i.reply({ embeds: [{ ...getRpsWinnerEmbed(p2, p1), timestamp: new Date() }] });
+          } else if (p1.shape === 'rock' && p2.shape === 'scissor') {
+            await i.reply({ embeds: [{ ...getRpsWinnerEmbed(p1, p2), timestamp: new Date() }] });
+          } else if (p1.shape === 'paper' && p2.shape === 'scissor') {
+            await i.reply({ embeds: [{ ...getRpsWinnerEmbed(p2, p1), timestamp: new Date() }] });
+          } else if (p2.shape === 'rock' && p1.shape === 'paper') {
+            await i.reply({ embeds: [{ ...getRpsWinnerEmbed(p1, p2), timestamp: new Date() }] });
+          } else if (p2.shape === 'rock' && p1.shape === 'scissor') {
+            await i.reply({ embeds: [{ ...getRpsWinnerEmbed(p2, p1), timestamp: new Date() }] });
+          } else if (p2.shape === 'paper' && p1.shape === 'scissor') {
+            await i.reply({ embeds: [{ ...getRpsWinnerEmbed(p1, p2), timestamp: new Date() }] });
+          }
+          collector.stop('Rock paper scissor game is done');
+        } catch (e) {
+          const message = e instanceof Error ? e.message : String(e);
+          logger.error(message);
         }
-        collector.stop('Rock paper scissor game is done');
+      } else {
+        collector.resetTimer();
       }
-      collector.resetTimer();
     });
 
     let msg = await message.channel.send({ embeds: [{ ...rpsEmbed, timestamp: new Date() }], components: [lesgo] });
