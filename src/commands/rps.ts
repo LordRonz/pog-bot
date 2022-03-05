@@ -94,17 +94,19 @@ const rps: Command = {
 
           if (p1.shape === p2.shape) {
             await i.reply({ embeds: [{ ...getRpsWinnerEmbed(p1, p2, true), timestamp: new Date() }] });
-          } else if (p1.shape === ROCK) {
-            winner = p2.shape === PAPER ? p2 : p1;
-            loser = p2.shape === PAPER ? p1 : p2;
-          } else if (p1.shape === PAPER) {
-            winner = p2.shape === SCISSOR ? p2 : p1;
-            loser = p2.shape === SCISSOR ? p1 : p2;
-          } else if (p1.shape === SCISSOR) {
-            winner = p2.shape === ROCK ? p2 : p1;
-            loser = p2.shape === ROCK ? p1 : p2;
+          } else {
+            if (p1.shape === ROCK) {
+              winner = p2.shape === PAPER ? p2 : p1;
+              loser = p2.shape === PAPER ? p1 : p2;
+            } else if (p1.shape === PAPER) {
+              winner = p2.shape === SCISSOR ? p2 : p1;
+              loser = p2.shape === SCISSOR ? p1 : p2;
+            } else if (p1.shape === SCISSOR) {
+              winner = p2.shape === ROCK ? p2 : p1;
+              loser = p2.shape === ROCK ? p1 : p2;
+            }
+            await i.reply({ embeds: [{ ...getRpsWinnerEmbed(winner, loser), timestamp: new Date() }] });
           }
-          await i.reply({ embeds: [{ ...getRpsWinnerEmbed(winner, loser), timestamp: new Date() }] });
           collector.stop('Rock paper scissor game is done');
         } catch (e) {
           const message = e instanceof Error ? e.message : String(e);
