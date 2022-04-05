@@ -36,7 +36,7 @@
     "husky": "^7.0.4",
     "octokit": "^1.7.1",
     "utf-8-validate": "^5.0.9",
-    "winston": "^3.6.0"
+    "winston": "^3.7.2"
   },
   "devDependencies": {
     "@commitlint/cli": "^16.2.3",
