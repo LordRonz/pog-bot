@@ -8,6 +8,7 @@
     "build:clean": "run-s clean build",
     "typecheck": "tsc --pretty --noEmit --incremental false",
     "start": "cd dist && node index.js",
+    "deduplicate": "npx yarn-deduplicate && yarn install",
     "test:watch": "jest --watch",
     "test": "jest -i",
     "test:coverage": "jest -i --coverage",
